@@ -1,0 +1,199 @@
+/* Ciao Beppe — one stylesheet for every page.
+   The look is the Varco app's: sepia paper with its grain, deep green ink,
+   Fraunces italic for headings, Manrope for reading text, pencil hatching. */
+
+@font-face { font-family: "Fraunces"; font-weight: 400; font-style: normal; font-display: swap; src: url("/assets/fonts/Fraunces_400Regular.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-weight: 600; font-style: normal; font-display: swap; src: url("/assets/fonts/Fraunces_600SemiBold.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-weight: 500; font-style: italic; font-display: swap; src: url("/assets/fonts/Fraunces_500Medium_Italic.woff2") format("woff2"); }
+@font-face { font-family: "Fraunces"; font-weight: 600; font-style: italic; font-display: swap; src: url("/assets/fonts/Fraunces_600SemiBold_Italic.woff2") format("woff2"); }
+@font-face { font-family: "Manrope"; font-weight: 500; font-style: normal; font-display: swap; src: url("/assets/fonts/Manrope_500Medium.woff2") format("woff2"); }
+@font-face { font-family: "Manrope"; font-weight: 700; font-style: normal; font-display: swap; src: url("/assets/fonts/Manrope_700Bold.woff2") format("woff2"); }
+@font-face { font-family: "Manrope"; font-weight: 800; font-style: normal; font-display: swap; src: url("/assets/fonts/Manrope_800ExtraBold.woff2") format("woff2"); }
+
+:root {
+  --paper: #efe4c9;          /* JF 10/19: lighter than the app's #e3cc9a */
+  --paper-light: #efe1bf;
+  --ink: #1e2321;
+  --ink-soft: #55625b;
+  --green-deep: #1c6a3a;
+  --green: #278a4c;
+  --rose: #d94542;
+  --hatch: #9c8a63;
+  --serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans: "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --measure: 38rem;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(rgba(247, 241, 226, 0.4), rgba(247, 241, 226, 0.4)),
+    url("/assets/paper-grain.png"),
+    radial-gradient(ellipse at 50% 30%, rgba(251, 246, 234, 0.8), rgba(240, 230, 208, 0) 70%);
+  background-size: 100% 100%, 256px 256px, 100% 100%;
+  background-attachment: fixed, scroll, fixed;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink);
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+}
+
+a { color: var(--green-deep); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+a:hover { color: var(--green); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--green-deep); outline-offset: 3px; border-radius: 2px; }
+
+.skip { position: absolute; left: -999px; top: 0.5rem; background: var(--paper-light); padding: 0.5rem 0.75rem; }
+.skip:focus { left: 0.5rem; }
+
+/* ── header ─────────────────────────────────────────────── */
+.site-head {
+  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+}
+.wordmark {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.wordmark:hover { color: var(--green-deep); }
+.site-nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-size: 0.95rem; }
+.site-nav a { color: var(--ink-soft); text-decoration: none; padding: 0.2rem 0; }
+.site-nav a:hover { color: var(--green-deep); }
+.site-nav a[aria-current="page"] { color: var(--green-deep); font-weight: 700; box-shadow: inset 0 -2px 0 var(--green); }
+
+/* ── page body ──────────────────────────────────────────── */
+main { flex: 1; width: 100%; max-width: 60rem; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+.prose { max-width: var(--measure); }
+
+h1, h2, h3 { font-family: var(--serif); color: var(--ink); line-height: 1.15; }
+h1 { font-style: italic; font-weight: 500; font-size: clamp(2.4rem, 7vw, 3.6rem); letter-spacing: -0.02em; margin: 0 0 1rem; }
+h2 { font-style: italic; font-weight: 500; font-size: 1.75rem; margin: 2.75rem 0 0.75rem; }
+h3 { font-weight: 600; font-size: 1.2rem; margin: 1.75rem 0 0.4rem; }
+p, ul, ol, table { margin: 0 0 1rem; }
+ul, ol { padding-left: 1.25rem; }
+li { margin-bottom: 0.35rem; }
+.lede { font-family: var(--serif); font-size: 1.3rem; line-height: 1.5; color: var(--ink); max-width: 34rem; }
+.muted { color: var(--ink-soft); }
+.updated { color: var(--ink-soft); font-size: 0.95rem; }
+
+/* A pencil-shaded link, like a selected answer box in the app */
+.hatched {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--green-deep);
+  text-decoration: none;
+  padding: 0.6rem 1.1rem;
+  border: 1.5px solid var(--green-deep);
+  border-radius: 3px;
+  background:
+    repeating-linear-gradient(-45deg, rgba(39, 138, 76, 0.22) 0 1.2px, transparent 1.2px 4.5px),
+    rgba(239, 225, 191, 0.55);
+}
+.hatched:hover { color: var(--ink); background-color: rgba(39, 138, 76, 0.2); }
+
+/* ── Ciao Beppe home ───────────────────────────────────── */
+.hello h1 { font-size: clamp(3rem, 11vw, 5.5rem); margin-bottom: 0.5rem; }
+.hello h1::after {
+  content: "";
+  display: block;
+  width: 5.5em;
+  max-width: 100%;
+  height: 0.16em;
+  margin-top: 0.12em;
+  background: repeating-linear-gradient(-45deg, var(--green) 0 1.5px, transparent 1.5px 5px);
+  opacity: 0.8;
+}
+.apps { margin-top: 3rem; }
+.app-row {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  max-width: 40rem;
+  padding: 1.5rem 0;
+  border-top: 1.5px solid rgba(28, 106, 58, 0.35);
+}
+.app-row img { width: 7rem; height: 7rem; border-radius: 1.6rem; display: block; }
+.app-row h2 { margin: 0 0 0.25rem; }
+.app-row p { margin: 0 0 0.5rem; }
+
+/* ── Varco page ─────────────────────────────────────────── */
+.app-hero { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2.5rem; align-items: center; }
+.app-hero img { width: clamp(9rem, 26vw, 15rem); height: auto; aspect-ratio: 1; border-radius: 22.4%; display: block; }
+.plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 2rem; max-width: 52rem; }
+.plans h3 { margin-top: 0; }
+.plan { padding-top: 1rem; border-top: 3px solid var(--green-deep); }
+
+/* ── tables (Risorse) ───────────────────────────────────── */
+.table-wrap { overflow-x: auto; max-width: 100%; margin: 0 0 1.25rem; }
+table { border-collapse: collapse; font-size: 1rem; min-width: 30rem; }
+th, td { text-align: left; padding: 0.35rem 1rem 0.35rem 0; border-bottom: 1px solid rgba(85, 98, 91, 0.3); }
+th { font-family: var(--serif); font-style: italic; font-weight: 600; color: var(--green-deep); }
+td:first-child { color: var(--ink-soft); }
+.it { font-family: var(--serif); font-style: italic; font-weight: 500; }
+
+/* ── support questions ─────────────────────────────────── */
+details { max-width: var(--measure); border-top: 1px solid rgba(85, 98, 91, 0.3); padding: 0.75rem 0; }
+details:last-of-type { border-bottom: 1px solid rgba(85, 98, 91, 0.3); }
+summary { cursor: pointer; font-family: var(--serif); font-weight: 600; font-size: 1.12rem; list-style-position: outside; }
+summary::marker { color: var(--green); }
+details[open] summary { margin-bottom: 0.5rem; }
+
+/* ── footer ─────────────────────────────────────────────── */
+.site-foot {
+  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 2.5rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  border-top: 1px solid rgba(85, 98, 91, 0.25);
+}
+.site-foot a { color: var(--ink-soft); }
+
+@media (max-width: 34rem) {
+  .app-hero { grid-template-columns: 1fr; }
+  .app-hero img { order: -1; }
+  .app-row { grid-template-columns: 5rem 1fr; gap: 1rem; }
+  .app-row img { width: 5rem; height: 5rem; border-radius: 1.15rem; }
+}
+
+/* Risorse: Italian forms in the serif italic, like the app's verb forms */
+.risorse em { font-family: var(--serif); font-style: italic; font-weight: 500; }
+.risorse h2 { margin-top: 3rem; }
+.risorse h3 { margin-top: 2rem; }
+
+/* Risorse contents list */
+.toc { margin: 0 0 2.5rem; padding: 1rem 0 1.25rem; border-top: 1.5px solid rgba(28, 106, 58, 0.35); border-bottom: 1.5px solid rgba(28, 106, 58, 0.35); }
+.risorse .toc-title { margin: 0 0 0.6rem; font-size: 1.15rem; }
+.toc ul { list-style: none; margin: 0; padding: 0; columns: 2 12rem; column-gap: 2rem; }
+.toc li { margin: 0 0 0.35rem; break-inside: avoid; }
+.toc a { text-decoration: none; }
+.toc a:hover { text-decoration: underline; }
+.risorse h2[id] { scroll-margin-top: 1rem; }
