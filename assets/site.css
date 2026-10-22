@@ -11,7 +11,7 @@
 @font-face { font-family: "Manrope"; font-weight: 800; font-style: normal; font-display: swap; src: url("/assets/fonts/Manrope_800ExtraBold.woff2") format("woff2"); }
 
 :root {
-  --paper: #efe4c9;          /* JF 10/19: lighter than the app's #e3cc9a */
+  --paper: #e9d8b0;          /* JF 10/22: halfway between the app's #e3cc9a and 10/19's #efe4c9 */
   --paper-light: #efe1bf;
   --ink: #1e2321;
   --ink-soft: #55625b;
@@ -30,7 +30,7 @@
 html {
   background-color: var(--paper);
   background-image:
-    linear-gradient(rgba(247, 241, 226, 0.4), rgba(247, 241, 226, 0.4)),
+    linear-gradient(rgba(247, 241, 226, 0.25), rgba(247, 241, 226, 0.25)),
     url("/assets/paper-grain.png"),
     radial-gradient(ellipse at 50% 30%, rgba(251, 246, 234, 0.8), rgba(240, 230, 208, 0) 70%);
   background-size: 100% 100%, 256px 256px, 100% 100%;
