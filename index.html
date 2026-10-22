@@ -13,7 +13,7 @@
   <style>
     @font-face { font-family: "Fraunces"; font-weight: 500; font-style: italic; font-display: swap; src: url("/assets/fonts/Fraunces_500Medium_Italic.woff2") format("woff2"); }
     @font-face { font-family: "Manrope"; font-weight: 800; font-display: swap; src: url("/assets/fonts/Manrope_800ExtraBold.woff2") format("woff2"); }
-    @font-face { font-family: "Source Sans 3"; font-weight: 700; font-display: swap; src: url("/assets/fonts/SourceSans3_700.woff2") format("woff2"); }
+    @font-face { font-family: "Source Sans 3"; font-weight: 600; font-display: swap; src: url("/assets/fonts/SourceSans3_600.woff2") format("woff2"); }
     :root { color-scheme: light; }
     html, body { margin: 0; height: 100%; overflow: hidden; background: #e3cc9a; }
     .grain { background-image: url("/assets/paper-grain.png"); background-size: 256px 256px; }
@@ -23,10 +23,14 @@
     #walk { position: absolute; inset: 0; will-change: transform; }
     .scene { position: absolute; }
     #word { position: absolute; left: 0; right: 0; text-align: center; font-family: Manrope, "Helvetica Neue", Arial, sans-serif; font-weight: 800; color: rgba(28, 106, 58, 0.59); }
-    #hint { position: absolute; left: 0; right: 0; text-align: center; font-family: Fraunces, Georgia, serif; font-style: italic; font-weight: 500; color: #55625b; opacity: 0.55; transition: opacity 250ms linear; }
-    #logo { position: absolute; left: calc(env(safe-area-inset-left, 0px) + 18px); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
-            font-family: "Source Sans 3", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-weight: 700; font-size: 17px; letter-spacing: -0.02em; color: #2B2B2A; }
-    #logo span { color: #1c6a3a; }
+    /* JF 10/22: the hint toned up (with a soft paper halo over the floor lines); the logo
+       centered beneath it, smaller and quieter (mockup option B); both leave on the tap */
+    #hint { position: absolute; left: 0; right: 0; text-align: center; font-family: Fraunces, Georgia, serif; font-style: italic; font-weight: 500;
+            color: #3f4a44; opacity: 0.88; text-shadow: 0 0 6px rgba(233, 216, 176, 0.95), 0 0 2px rgba(233, 216, 176, 0.9); transition: opacity 250ms linear; }
+    #logo { position: absolute; left: 0; right: 0; text-align: center; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px);
+            font-family: "Source Sans 3", -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-weight: 600; font-size: 12.5px; letter-spacing: 0.01em;
+            color: #55625b; opacity: 0.9; text-shadow: 0 0 5px rgba(233, 216, 176, 0.9); transition: opacity 250ms linear; }
+    #logo span { color: #2f7347; }
     #fade { position: absolute; inset: 0; background: #eadab4; opacity: 0; pointer-events: none; }
     .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   </style>
@@ -50,13 +54,16 @@
     var WALK_MS = 2200, FADE_IN_AT_MS = 1760, FADE_MS = 520, SKIP_FADE_MS = 180, MAX_ZOOM = 16, OVERSHOOT = 2.7;
     var NEXT = '/varco/';
     var enter = document.getElementById('enter'), walk = document.getElementById('walk'), scene = walk.querySelector('.scene');
-    var word = document.getElementById('word'), hint = document.getElementById('hint'), fade = document.getElementById('fade');
+    var word = document.getElementById('word'), hint = document.getElementById('hint'), logo = document.getElementById('logo'), fade = document.getElementById('fade');
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var phase = 'waiting', geo, walkAnim, fadeAnim, fadeTimer;
 
     function layout() {
       var W = window.innerWidth, H = window.innerHeight;
-      var tablet = Math.min(W, H) >= 600;                     // sceneFit: phones cover, larger screens fit the height
+      // sceneFit: a phone held upright covers the screen; anything wider (desktop, tablet,
+      // a phone on its side, a short laptop window) fits the height. JF 10/22: the old test,
+      // min(W, H) >= 600, zoomed a short desktop window about four times over.
+      var tablet = !(W < 600 && H >= W);
       var sc = tablet ? H / SCENE_H : Math.max(W / SCENE_W, H / SCENE_H);
       var offX = (W - SCENE_W * sc) / 2, offY = (H - SCENE_H * sc) / 2;
       scene.style.width = (2 * EXTRA + SCENE_W) * sc + 'px';
@@ -72,7 +79,7 @@
       word.style.letterSpacing = ls + 'px';
       word.style.paddingLeft = ls + 'px';
       var k = Math.min(1.35, Math.max(1, W / 325));            // the app's useScale
-      hint.style.bottom = 30.4 * k + 'px';
+      hint.style.bottom = 'calc(env(safe-area-inset-bottom, 0px) + ' + (30.4 * k + 24) + 'px)';   // room for the logo beneath
       hint.style.fontSize = 14.7 * k + 'px';
       var fill = Math.max(W / (DOOR.w * sc), H / (DOOR.h * sc));
       geo = { ox: offX + LIT.x * sc, oy: offY + LIT.y * sc, zoom: Math.max(MAX_ZOOM, fill * OVERSHOOT) };
@@ -96,7 +103,7 @@
         return;
       }
       phase = 'walking';
-      hint.style.opacity = '0';
+      hint.style.opacity = '0'; logo.style.opacity = '0';
       if (reduce || !walk.animate) { fadeToPaper(FADE_MS); return; }
       walkAnim = walk.animate([{ transform: 'scale(1)' }, { transform: 'scale(' + geo.zoom + ')' }],
         { duration: WALK_MS, easing: 'cubic-bezier(0.42, 0, 0.9, 0.4)', fill: 'forwards' });
@@ -106,7 +113,7 @@
     function reset() {                                        // coming back with the Back button
       phase = 'waiting'; clearTimeout(fadeTimer);
       if (walkAnim) walkAnim.cancel(); if (fadeAnim) fadeAnim.cancel();
-      hint.style.opacity = '';
+      hint.style.opacity = ''; logo.style.opacity = '';
     }
 
     layout();

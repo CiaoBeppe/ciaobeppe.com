@@ -60,7 +60,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--green-deep); ou
 /* ── header ─────────────────────────────────────────────── */
 .site-head {
   width: 100%;
-  max-width: 60rem;
+  max-width: 64rem;
   margin: 0 auto;
   padding: 1.5rem 1.5rem 0;
   display: flex;
@@ -79,6 +79,8 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--green-deep); ou
   letter-spacing: -0.01em;
 }
 .wordmark:hover { color: var(--green-deep); }
+.wordmark { display: inline-flex; align-items: center; gap: 0.6rem; }
+.wordmark .glyph { width: 2rem; height: 2rem; color: var(--green-deep); flex: none; }
 .site-nav { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; font-size: 0.95rem; }
 .site-nav a { color: var(--ink-soft); text-decoration: none; padding: 0.2rem 0; }
 .site-nav a:hover { color: var(--green-deep); }
@@ -165,7 +167,7 @@ details[open] summary { margin-bottom: 0.5rem; }
 /* ── footer ─────────────────────────────────────────────── */
 .site-foot {
   width: 100%;
-  max-width: 60rem;
+  max-width: 64rem;
   margin: 0 auto;
   padding: 1.5rem 1.5rem 2.5rem;
   font-size: 0.9rem;
@@ -197,3 +199,73 @@ details[open] summary { margin-bottom: 0.5rem; }
 .toc a { text-decoration: none; }
 .toc a:hover { text-decoration: underline; }
 .risorse h2[id] { scroll-margin-top: 1rem; }
+
+/* ── Varco navigation: the app's home (JF 10/22) ────────── */
+/* Desktop: a left column with the menu boxes standing in a pencil archway
+   (the icon above them on the Varco page); the page to the right.
+   Phone: the boxes in a 2 × 2 grid above the page. */
+.layout { flex: 1; width: 100%; max-width: 64rem; margin: 0 auto; padding: 2rem 1.5rem 4rem;
+          display: grid; grid-template-columns: 13.5rem minmax(0, 1fr); gap: 0 3.75rem; }
+.layout main { padding: 0; max-width: none; margin: 0; min-width: 0; }
+.layout h1 { margin-top: -0.35rem; }
+.rail { position: sticky; top: 1.5rem; align-self: start; }
+.rail .icon { display: block; width: 100%; height: auto; aspect-ratio: 1; border-radius: 22.4%; margin: 0 0 2.25rem; }
+.boxes { position: relative; z-index: 0; display: grid; gap: 0.95rem; padding: 4.6rem 0.95rem 1.2rem; }
+.boxes .arch { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; color: var(--green-deep); overflow: visible; }
+
+/* a box like the app's: pencil lines that run just past the corners, a light hatch;
+   filled with green hatching when selected */
+.box { position: relative; display: block; padding: 0.5rem 0.85rem 0.55rem; font-family: var(--serif); font-style: italic;
+       font-weight: 600; font-size: 1.28rem; line-height: 1.2; color: var(--green-deep); text-decoration: none;
+       background: repeating-linear-gradient(-58deg, rgba(110, 96, 62, 0.16) 0 1px, transparent 1px 3.6px), rgba(239, 225, 191, 0.6); }
+.box::before, .box::after { content: ""; position: absolute; pointer-events: none; border: 0 solid var(--green-deep); }
+.box::before { inset: 0 -3px; border-top-width: 1.5px; border-bottom-width: 1.5px; }
+.box::after  { inset: -3px 0; border-left-width: 1.5px; border-right-width: 1.5px; }
+.box:hover { color: var(--ink); background-color: rgba(39, 138, 76, 0.16); }
+.box[aria-current="page"], .box.on {
+  color: #f4ecd6;
+  background: repeating-linear-gradient(-58deg, rgba(14, 70, 36, 0.5) 0 1.2px, transparent 1.2px 3.4px), #2b7f48; }
+
+/* screenshots */
+.shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; margin: 2.5rem 0 1.75rem; max-width: 40rem; }
+.gallery { max-width: none; row-gap: 2.25rem; }
+.shot { margin: 0; }
+.shot img { display: block; width: 100%; height: auto; border-radius: 1.35rem; border: 1.5px solid rgba(28, 106, 58, 0.45); background: #e3cc9a; }
+.shot figcaption { font-size: 0.93rem; line-height: 1.45; color: var(--ink-soft); margin-top: 0.7rem; }
+
+/* Grammatica: the contents work like the app's home */
+.picker { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 0 1.6rem; margin: 2rem 0 1rem; max-width: 36rem; }
+.picker .col { display: grid; gap: 0.85rem; align-content: start; }
+.picker .levels .box { font-size: 1.2rem; }
+.picker .tenses + .tenses { margin-top: 0.85rem; }      /* without JavaScript, every list shows */
+.picker .tenses .box { text-align: right; font-size: 1.12rem; }
+.picker .tenses[hidden] { display: none; }
+.picker-note { font-size: 0.93rem; color: var(--ink-soft); margin: 0 0 2.5rem; }
+.risorse .level { margin: 3.5rem 0 0.25rem; font-size: 2rem; color: var(--green-deep); }
+.risorse .level::after { content: ""; display: block; width: 4.5em; height: 0.2em; margin-top: 0.15em;
+  background: repeating-linear-gradient(-58deg, var(--green) 0 1.4px, transparent 1.4px 4.5px); opacity: 0.75; }
+.risorse h3 { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 1.6rem; margin: 2.5rem 0 0.7rem; }
+.risorse h4 { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; margin: 1.75rem 0 0.4rem; }
+.risorse [id] { scroll-margin-top: 1rem; }
+.risorse td .end { color: #73551a; }                     /* the app's amber; 4.9:1 on the paper */
+.back { margin: 1.25rem 0 0; font-size: 0.9rem; }
+.back a { text-decoration: none; color: var(--ink-soft); }
+.back a:hover { color: var(--green-deep); text-decoration: underline; }
+
+.hero-m img { display: none; }
+@media (max-width: 52rem) {
+  .layout { grid-template-columns: 1fr; padding-top: 1rem; }
+  .rail { position: static; }
+  .rail .icon { display: none; }
+  .boxes { grid-template-columns: 1fr 1fr; gap: 0.7rem 0.9rem; padding: 0.4rem 0.3rem 0; margin-bottom: 2.25rem; }
+  .boxes .arch { display: none; }
+  .box { font-size: 1.08rem; padding: 0.42rem 0.7rem; }
+  .hero-m { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem; }
+  .hero-m img { display: block; width: 4.5rem; height: 4.5rem; border-radius: 22.4%; }
+  .hero-m h1 { margin: 0; }
+  .shots { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 1rem; margin-right: -1.5rem; padding: 0 1.5rem 0.5rem 0; }
+  .shot { flex: 0 0 62%; scroll-snap-align: start; }
+  .picker { gap: 0 1rem; }
+  .picker .levels .box { font-size: 1.02rem; }
+  .picker .tenses .box { font-size: 0.98rem; }
+}
