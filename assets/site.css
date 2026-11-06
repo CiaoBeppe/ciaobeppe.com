@@ -271,3 +271,10 @@ details[open] summary { margin-bottom: 0.5rem; }
 }
 
 .plan-note { margin: 0.4rem 0 0.2rem; font-size: 0.95rem; color: var(--ink-soft); }
+
+/* Credits: the open-source notices (JF 11/06) */
+.credits-table table { font-size: 0.9rem; }
+.credits-table td:first-child { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.85rem; color: var(--ink); }
+pre.licence { white-space: pre-wrap; overflow-wrap: anywhere; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.78rem; line-height: 1.5; color: var(--ink-soft); background: rgba(239, 225, 191, 0.55); padding: 0.9rem 1rem; margin: 0.6rem 0 1rem; }
+.licences summary { font-family: var(--sans); font-weight: 600; font-size: 0.92rem; line-height: 1.45; }
