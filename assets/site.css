@@ -269,3 +269,5 @@ details[open] summary { margin-bottom: 0.5rem; }
   .picker .levels .box { font-size: 1.02rem; }
   .picker .tenses .box { font-size: 0.98rem; }
 }
+
+.plan-note { margin: 0.4rem 0 0.2rem; font-size: 0.95rem; color: var(--ink-soft); }
