@@ -278,3 +278,7 @@ details[open] summary { margin-bottom: 0.5rem; }
 pre.licence { white-space: pre-wrap; overflow-wrap: anywhere; font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   font-size: 0.78rem; line-height: 1.5; color: var(--ink-soft); background: rgba(239, 225, 191, 0.55); padding: 0.9rem 1rem; margin: 0.6rem 0 1rem; }
 .licences summary { font-family: var(--sans); font-weight: 600; font-size: 0.92rem; line-height: 1.45; }
+/* Credits: the two outer fold-outs (Packages, Licence texts) */
+details.fold { margin: 1rem 0; border-top: 1.5px solid rgba(28, 106, 58, 0.45); }
+details.fold > summary { font-family: var(--serif); font-style: italic; font-weight: 600; font-size: 1.3rem; color: var(--green-deep); padding: 0.75rem 0; }
+details.fold[open] > summary { margin-bottom: 0.5rem; }
